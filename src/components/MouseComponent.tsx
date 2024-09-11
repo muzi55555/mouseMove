@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { throttle } from '../libs/throttle';
+import { useEffect, useRef, useState } from 'react';
+
 import styles from './MouseComponent.module.css';
 
 interface IPosition {
@@ -8,19 +8,28 @@ interface IPosition {
 }
 
 export default function MouseComponent() {
+  const requestRef = useRef<number>(0);
   const [position, setPosition] = useState<IPosition>({ x: 0, y: 0 });
 
   const arrLength = 150;
   const newArr: number[] = Array.from({ length: arrLength }, (_, i) => i + 1);
 
   useEffect(() => {
-    const handleMouseMove = throttle((e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-    }, 30);
+    const handleMouseMove = (e: MouseEvent) => {
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
+      requestRef.current = requestAnimationFrame(() => {
+        setPosition({ x: e.clientX, y: e.clientY });
+      });
+    };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
     };
   }, []);
 

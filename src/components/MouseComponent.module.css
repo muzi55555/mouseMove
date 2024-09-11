@@ -6,4 +6,5 @@
   /* transform: translate(-50%, -50%); */
   align-content: center;
   color: black;
+  will-change: transform;
 }
