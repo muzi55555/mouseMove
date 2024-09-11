@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { throttle } from '../libs/throttle';
 import styles from './MouseComponent.module.css';
 
 interface IPosition {
@@ -13,9 +14,9 @@ export default function MouseComponent() {
   const newArr: number[] = Array.from({ length: arrLength }, (_, i) => i + 1);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = throttle((e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
-    };
+    }, 30);
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
