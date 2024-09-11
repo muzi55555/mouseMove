@@ -9,7 +9,7 @@ interface IPosition {
 export default function MouseComponent() {
   const [position, setPosition] = useState<IPosition>({ x: 0, y: 0 });
 
-  const arrLength = 1500;
+  const arrLength = 150;
   const newArr: number[] = Array.from({ length: arrLength }, (_, i) => i + 1);
 
   useEffect(() => {
