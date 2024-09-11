@@ -9,6 +9,9 @@ interface IPosition {
 export default function MouseComponent() {
   const [position, setPosition] = useState<IPosition>({ x: 0, y: 0 });
 
+  const arrLength = 1500;
+  const newArr: number[] = Array.from({ length: arrLength }, (_, i) => i + 1);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
@@ -20,7 +23,13 @@ export default function MouseComponent() {
     };
   }, []);
 
-  console.log('x =>', position.x, 'y =>', position.y);
-
-  return <div className={styles.boxItem}>mouse event</div>;
+  return (
+    <>
+      {newArr.map((el) => (
+        <div key={el} className={styles.boxItem} style={{ top: `${position.y}px`, left: `${position.x}px` }}>
+          {el}
+        </div>
+      ))}
+    </>
+  );
 }
