@@ -26,7 +26,13 @@ export default function MouseComponent() {
   return (
     <>
       {newArr.map((el) => (
-        <div key={el} className={styles.boxItem} style={{ top: `${position.y}px`, left: `${position.x}px` }}>
+        <div
+          key={el}
+          className={styles.boxItem}
+          style={{
+            transform: `translate(calc(${position.x}px - 50%), calc(${position.y}px - 50%))`,
+          }}
+        >
           {el}
         </div>
       ))}
